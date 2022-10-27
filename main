@@ -2,9 +2,10 @@ import random
 import math
 import pygame
 import sys
+import time
 from pygame.locals import QUIT,Rect, KEYDOWN, K_LEFT, K_RIGHT, K_UP, K_DOWN, K_SPACE
 
-n = int(input("오른쪽 문제에 답을 해주세요. O(1), X(0): "))
+n = int(input("인공지능이란 단어는 1956년 미국에서 열린 다트머스 회의에서 처음 사용되기 시작했다. O(1), X(0): "))
 if n == 1 :
         print("정답입니다.")
 else :
@@ -12,13 +13,13 @@ else :
 
 
 class Total:
-    def __init__(self,col,rect,speed = 0): #col:채우는색, rect:그리는 직사각형(위치,크기), speed(이동속도,공만),dir(이동방향, 공만)
+    def __init__(self,col,rect,speed = 0): 
         self.col = col
         self.rect = rect
         self.speed = speed
         self.dir = random.randint(-85, 85) +200
 
-    def move(self):#공을 움직인다 , radians를 사용해서 dir을 라디안으로 변환, X축과Y축의 방향성분구분
+    def move(self):
         self.rect.centerx += math.cos(math.radians(self.dir)) * self.speed
         self.rect.centery -= math.sin(math.radians(self.dir)) * self.speed
     def draw(self):
@@ -34,7 +35,6 @@ FPSCLOCK = pygame.time.Clock()
 
 
 def main():
-    # 게임 진행과 메세지
     game_start = False
     game_over = False
 
@@ -42,23 +42,22 @@ def main():
     Small_font = pygame.font.SysFont(None, 40)
     message_start = Small_font.render("Game_Start : SpaceBar", True, (255, 255, 255))
 
-
-    # player Circle
+  
     C_x = 400
     C_y = 400
     Cir = Total((255, 255, 255), Rect(C_x, C_y, 10, 10))
 
-    # Obstacle
+
     Ball_x = []
     Ball_y = []
-    B_one = []  # i의 반복되는 만큼 1이 저장된다.
-    B_point = []  # i가 반복되는 값을 저장한다
-    B_velocity = []  # 공 하나당의 속도를 담는다
+    B_one = []  
+    B_point = [] 
+    B_velocity = [] 
     for i in range(1,80):
-        i += 10
+        i *= 20
         B_point.append(i)
         B_one.append(1)
-        B_velocity.append(random.randint(2,7))
+        B_velocity.append(random.randint(2,10))
 
     while True:
         message_time = Small_font.render("time : %.2f s" %time, True, (255, 255, 255))
